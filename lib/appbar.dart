@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:quizonire_app/colors.dart';
 
 var appBar = (AppBar(
   centerTitle: true,
-  backgroundColor: const Color(0xffE7F0DC),
+  backgroundColor: chromeWhite,
   title: const Text(
     "Q u i z o n i r e",
     style: TextStyle(fontWeight: FontWeight.w900),
