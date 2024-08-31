@@ -1,29 +1,33 @@
 import 'package:flutter/material.dart';
-import 'package:quizonire_app/questions.dart';
-import 'package:quizonire_app/quiz_page.dart';
+import 'package:quizonire_app/colors.dart';
 
-class QuestionButtons extends StatefulWidget {
-  const QuestionButtons({super.key});
+class QuestionButtons extends StatelessWidget {
+  const QuestionButtons({
+    super.key,
+    required this.currAnswer,
+    required this.onTap,
+  });
 
-  @override
-  State<QuestionButtons> createState() {
-    return _QuestionButtons();
-  }
-}
-
-class _QuestionButtons extends State<QuestionButtons> {
-  //declare variables & functions her
+  final String currAnswer;
+  final void Function() onTap;
 
   @override
   Widget build(BuildContext context) {
-    //logic here
-    return TextButton(
-      onPressed: () {},
-      child: Text(
-        questions[currQuestionIndex].answers[0],
-        style: const TextStyle(
-          color: Colors.white,
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: buttonColor,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(10)),
         ),
+      ),
+      onPressed: onTap,
+      child: Text(
+        currAnswer,
+        style: const TextStyle(
+          color: Colors.black,
+          fontWeight: FontWeight.w400,
+        ),
+        textAlign: TextAlign.center,
       ),
     );
   }

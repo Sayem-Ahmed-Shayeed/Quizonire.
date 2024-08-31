@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:quizonire_app/appbar.dart';
 import 'package:quizonire_app/colors.dart';
 import 'package:quizonire_app/first_page.dart';
+import 'package:quizonire_app/questions.dart';
 import 'package:quizonire_app/quiz_page.dart';
+import 'package:quizonire_app/summary_page.dart';
+
+List<String> chosenAnswer = [];
 
 class CurrPage extends StatefulWidget {
   const CurrPage({super.key});
@@ -14,11 +18,28 @@ class CurrPage extends StatefulWidget {
 }
 
 class _CurrPage extends State<CurrPage> {
-  var activeScreen = 'firstPage';
   dynamic screenWidget;
+  var activeScreen = 'firstPage';
 
   void shiftToQuestionPage() {
     setState(() {
+      activeScreen = 'questionPage';
+    });
+  }
+
+  void addAnswer(String selectedAnswer) {
+    chosenAnswer.add(selectedAnswer);
+    setState(() {
+      if (chosenAnswer.length == questions.length) {
+        activeScreen = 'summaryPage';
+      }
+    });
+  }
+
+  void restartQuiz() {
+    setState(() {
+      chosenAnswer = [];
+      currQuestionIndex = 0;
       activeScreen = 'questionPage';
     });
   }
@@ -28,7 +49,11 @@ class _CurrPage extends State<CurrPage> {
     if (activeScreen == 'firstPage') {
       screenWidget = FirstPage(shiftToQuestionPage: shiftToQuestionPage);
     } else if (activeScreen == 'questionPage') {
-      screenWidget = const QuizPage();
+      screenWidget = QuizPage(addAnswer: addAnswer);
+    } else if (activeScreen == 'summaryPage') {
+      screenWidget = SummaryPage2(
+        onRestart: restartQuiz,
+      );
     }
     return MaterialApp(
       debugShowCheckedModeBanner: false,
